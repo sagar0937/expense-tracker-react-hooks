@@ -16,7 +16,7 @@ const IncomeExpense = () => {
     amounts.filter((item) => item < 0).reduce((acc, item) => (acc += item), 0) *
     -1
   ).toFixed(2);
-  //const sign = transaction.amount < 0 ? '-' : '+';
+
   return (
     <>
       <div className='inc-exp-container'>

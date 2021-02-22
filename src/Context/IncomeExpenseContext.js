@@ -1,19 +1,37 @@
 import React, { createContext, useReducer } from "react";
 import { IncExpReducer } from "./IncExpReducer";
 
+// Initial state
+const initialState = {
+  transactions: [],
+};
 //create context
 export const IncExpContext = createContext();
 
 // Provider component
 const IncomeExpenseProvider = ({ children }) => {
-  const [transactions, dispatch] = useReducer(IncExpReducer, [
-    { id: 1, text: "Flower", amount: -20 },
-    { id: 2, text: "Salary", amount: 300 },
-    { id: 3, text: "Book", amount: -10 },
-    { id: 4, text: "Camera", amount: 150 },
-  ]);
+  const [state, dispatch] = useReducer(IncExpReducer, initialState);
+  // Actions
+  function deleteTransaction(id) {
+    dispatch({
+      type: "DELETE_TRANSACTION",
+      payload: id,
+    });
+  }
+
+  function addTransaction(transaction) {
+    dispatch({
+      type: "ADD_TRANSACTION",
+      payload: transaction,
+    });
+  }
   return (
-    <IncExpContext.Provider value={{ transactions, dispatch }}>
+    <IncExpContext.Provider
+      value={{
+        transactions: state.transactions,
+        deleteTransaction,
+        addTransaction,
+      }}>
       {children}
     </IncExpContext.Provider>
   );
